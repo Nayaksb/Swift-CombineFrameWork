@@ -22,6 +22,7 @@ struct ContentView: View {
                     }
                     .frame(width: 50, height: 50)
                         .padding()
+                    
                     Text(photo.title)
                         .font(.headline)
                         .multilineTextAlignment(.leading)
