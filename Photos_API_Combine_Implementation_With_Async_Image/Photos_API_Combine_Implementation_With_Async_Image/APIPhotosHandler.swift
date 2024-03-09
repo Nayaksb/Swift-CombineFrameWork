@@ -29,8 +29,18 @@ class APIPhotosHandler: ObservableObject{
             .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
 //            .map(\.data)
+        /*   .map({ (data: Data, response: URLResponse) in
+                        data
+                    })
+         */
             .tryMap(handleOutput)
             .decode(type: SlingAcademyPhotos.self, decoder: JSONDecoder())
+        /*
+            .replaceError(with:slingPhotos)
+            .sink(receiveValue: { [weak self] (returnedPhotos) in
+                self?.slingPhotos = returnedPhotos
+            })
+         */
             .sink{ (complition) in
                 switch complition {
                 case .finished:
@@ -41,9 +51,8 @@ class APIPhotosHandler: ObservableObject{
             }
         receiveValue: { [weak self] (returnedPhotos) in
 //          self?.photos = returnedPhotos
-            print(returnedPhotos)
             self?.slingPhotos = returnedPhotos
-            
+
         }
             .store(in: &cancellable)
         
